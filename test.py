@@ -15,7 +15,7 @@ def db_connection():
     db = psycopg2.connect(
         user='aulaspl',
         password='aulaspl',
-        host='127.0.0.1',
+        host='localhost',
         port='5432',
         database='projetoBD2023'
     )
