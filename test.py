@@ -101,6 +101,54 @@ def add_song():
 
     return flask.jsonify(response)
 
+@app.route('/consumer/', methods=['POST'])
+def add_consumer():
+    logger.info('POST /consumer')
+    payload = flask.request.get_json()
+
+    conn = db_connection()
+    cur = conn.cursor()
+
+    logger.debug(f'POST /consumer - payload: {payload}')
+
+    # validate every argument, e.g.,:
+    required_fields = ['premium', 'app_users_id', 'app_users_first_name', 
+                       'app_users_last_name', 'app_users_email', 'app_users_username', 'app_users_password', 
+                       'app_users_address', 'app_users_gender']
+    for field in required_fields:
+        if field not in payload:
+            response = {'status': StatusCodes['api_error'], 'results': f'{field} value not in payload'}
+            return flask.jsonify(response)
+
+    # parameterized queries, good for security and performance
+    statement = '''INSERT INTO consumer (premium, app_users_id, app_users_first_name, 
+                                         app_users_last_name, app_users_email, app_users_username, app_users_password, 
+                                         app_users_address, app_users_gender)
+                   VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)'''
+    values = (payload['premium'], payload['app_users_id'],  payload['app_users_first_name'], payload['app_users_last_name'], payload['app_users_email'], 
+              payload['app_users_username'], payload['app_users_password'], payload['app_users_address'], 
+              payload['app_users_gender'])
+
+    try:
+        cur.execute(statement, values)
+
+        # commit the transaction
+        conn.commit()
+        response = {'status': StatusCodes['success'], 'results': f'Inserted consumer {payload["app_users_id"]}'}
+
+    except (Exception, psycopg2.DatabaseError) as error:
+        logger.error(f'POST /consumer - error: {error}')
+        response = {'status': StatusCodes['internal_error'], 'errors': str(error)}
+
+        # an error occurred, rollback
+        conn.rollback()
+
+    finally:
+        if conn is not None:
+            conn.close()
+
+    return flask.jsonify(response)
+
 if __name__ == '__main__':
     logging.basicConfig(filename='log_file.log')
     logger = logging.getLogger('logger')
