@@ -65,8 +65,41 @@ def get_artists():
     return flask.jsonify(response)
 
 
+@app.route('/addsong',methods = ['POST'])
+def add_song():
+    logger.info('POST /addsong')
+    payload = flask.request.get_json()
 
+    conn= db_connection()
+    cur = conn.cursor()
 
+    logger.debug(f'POST /addsong - payload: {payload}')
+
+    if 'ismn' not in payload:
+        response = {'status': StatusCodes['api_error'], 'results': 'ismn value not in payload'}
+        return flask.jsonify(response)
+    
+    statement = 'INSERT INTO song VALUES(%s, %s, %s, %s, %s, %s)'
+    values = (payload['ismn'], payload['genre'], payload['title'], payload['release_date'], payload['duration'], payload['artist_app_users_id'])
+
+    try:
+        cur.execute(statement, values)
+
+        conn.commit()
+        response = {'status': StatusCodes['success'], 'results': f'Inserted dep {payload["ismn"]}'}
+
+    except (Exception, psycopg2.DatabaseError) as error:
+        logger.error(f'POST /addsong - error: {error}')
+        response = {'status': StatusCodes['internal_error'], 'errors': str(error)}
+
+        # an error occurred, rollback
+        conn.rollback()
+
+    finally:
+        if conn is not None:
+            conn.close()
+
+    return flask.jsonify(response)
 
 if __name__ == '__main__':
     logging.basicConfig(filename='log_file.log')
