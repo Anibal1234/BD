@@ -29,7 +29,7 @@ def landing_page():
 
 
 @app.route('/label',methods=['GET'])
-def get_artists():
+def get_label():
     logger.info('GET /label')
 
     conn = db_connection()
@@ -148,6 +148,17 @@ def add_consumer():
             conn.close()
 
     return flask.jsonify(response)
+
+
+@app.route('/addalbum',methods = ['POST'])
+def add_album():
+    logger.info('POST /addalbum')
+    payload = flask.request.get_json()
+
+    conn = db_connection()
+    cur = conn.curson()
+
+    if ''
 
 if __name__ == '__main__':
     logging.basicConfig(filename='log_file.log')

@@ -235,3 +235,17 @@ INFO:werkzeug: * Debugger PIN: 134-099-801
 INFO:logger:POST /addsong
 DEBUG:logger:POST /addsong - payload: {'ismn': 54321, 'genre': 'ROCK', 'title': 'fluidos', 'release_date': '18-05-2023', 'duration': 24, 'artist_app_users_id': 123}
 INFO:werkzeug:127.0.0.1 - - [18/May/2023 18:48:32] "POST /addsong HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in 'C:\\Users\\nicas\\OneDrive\\Desktop\\universidade\\4 ano\\2semestre\\BD\\Projecto_f\\BD\\test.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 134-099-801
+INFO:werkzeug: * Detected change in 'C:\\Users\\nicas\\OneDrive\\Desktop\\universidade\\4 ano\\2semestre\\BD\\Projecto_f\\BD\\test.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 134-099-801
+INFO:werkzeug: * Detected change in 'C:\\Users\\nicas\\OneDrive\\Desktop\\universidade\\4 ano\\2semestre\\BD\\Projecto_f\\BD\\test.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 134-099-801
+INFO:werkzeug: * Detected change in 'C:\\Users\\nicas\\OneDrive\\Desktop\\universidade\\4 ano\\2semestre\\BD\\Projecto_f\\BD\\test.py', reloading
+INFO:werkzeug: * Restarting with stat
